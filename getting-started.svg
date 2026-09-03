@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; fill: #f1f5f9; }
+    .step-num { font-size: 28px; font-weight: 800; fill: #3b82f6; }
+    .step-label { font-size: 16px; font-weight: 600; }
+    .step-detail { font-size: 12px; fill: #94a3b8; }
+    .arrow { stroke: #3b82f6; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+    .box { rx: 12; ry: 12; }
+    .done-label { font-size: 11px; fill: #22c55e; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#0f172a"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-size="22" font-weight="800" fill="#f1f5f9">Get Started in 4 Steps</text>
+  <text x="400" y="62" text-anchor="middle" font-size="13" fill="#64748b">Your store on the web. No middleman. No fees.</text>
+
+  <!-- Step 1 -->
+  <rect x="40" y="95" width="320" height="100" class="box" fill="#1e293b" stroke="#334155"/>
+  <text x="70" y="130" class="step-num">1</text>
+  <text x="100" y="130" class="step-label">Install WebClerk</text>
+  <text x="100" y="152" class="step-detail">Free, open source. One download.</text>
+  <text x="100" y="170" class="step-detail">github.com/JPods/WebClerk</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="360" y1="145" x2="430" y2="145" class="arrow"/>
+
+  <!-- Step 2 -->
+  <rect x="440" y="95" width="320" height="100" class="box" fill="#1e293b" stroke="#334155"/>
+  <text x="470" y="130" class="step-num">2</text>
+  <text x="500" y="130" class="step-label">Get a Domain</text>
+  <text x="500" y="152" class="step-detail">Cloudflare or Hostinger.</text>
+  <text x="500" y="170" class="step-detail">~$10/year. Point it at your machine.</text>
+
+  <!-- Arrow 2→3 (down) -->
+  <path d="M 600 195 L 600 230 L 200 230 L 200 260" class="arrow"/>
+
+  <!-- Step 3 -->
+  <rect x="40" y="260" width="320" height="100" class="box" fill="#1e293b" stroke="#334155"/>
+  <text x="70" y="295" class="step-num">3</text>
+  <text x="100" y="295" class="step-label">Run It on a Mac Mini</text>
+  <text x="100" y="317" class="step-detail">24 GB RAM. $1,500 - $1,900.</text>
+  <text x="100" y="335" class="step-detail">Your hardware. Your data. Your desk.</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="360" y1="310" x2="430" y2="310" class="arrow"/>
+
+  <!-- Step 4 -->
+  <rect x="440" y="260" width="320" height="100" class="box" fill="#1e293b" stroke="#334155"/>
+  <text x="470" y="295" class="step-num">4</text>
+  <text x="500" y="295" class="step-label">Load Your Inventory</text>
+  <text x="500" y="317" class="step-detail">Link your system, or export and upload.</text>
+  <text x="500" y="335" class="step-detail">AI assists. Free HQ support for 2 months.</text>
+
+  <!-- Arrow 4→Done (down to center) -->
+  <path d="M 600 360 L 600 390 L 400 390 L 400 410" class="arrow"/>
+
+  <!-- Done -->
+  <rect x="200" y="410" width="400" height="65" class="box" fill="#1e3a2a" stroke="#22c55e" stroke-width="2"/>
+  <text x="400" y="440" text-anchor="middle" font-size="18" font-weight="700" fill="#22c55e">You're Live</text>
+  <text x="400" y="460" text-anchor="middle" font-size="12" fill="#94a3b8">Customers find your inventory at webserving.com</text>
+
+</svg>
