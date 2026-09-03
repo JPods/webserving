@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebServing — Find Local Inventory</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0f172a; --surface: #1e293b; --surface2: #334155;
+    --text: #f1f5f9; --muted: #94a3b8; --dim: #64748b;
+    --accent: #3b82f6; --green: #22c55e; --red: #ef4444; --gold: #f59e0b;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'SF Mono', 'Fira Code', monospace;
+  }
+  body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; }
+
+  .hero { text-align: center; padding: 60px 20px 20px; max-width: 700px; margin: 0 auto; }
+  .hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -0.02em; }
+  .hero h1 span { color: var(--accent); }
+  .hero .tagline { font-size: 1.1rem; color: var(--muted); margin: 8px 0 4px; }
+  .hero .sub { font-size: 0.9rem; color: var(--dim); }
+
+  .search-box { max-width: 600px; margin: 32px auto 0; padding: 0 20px; }
+  .search-row { display: flex; gap: 8px; margin-bottom: 12px; }
+  .search-row input { flex: 1; background: var(--surface); border: 1px solid var(--surface2); border-radius: 8px; padding: 14px 16px; font-size: 1rem; color: var(--text); outline: none; }
+  .search-row input::placeholder { color: var(--dim); }
+  .search-row input:focus { border-color: var(--accent); }
+  .search-row button { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 14px 24px; font-size: 1rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .search-row button:hover { background: #2563eb; }
+
+  .options { display: flex; gap: 16px; align-items: center; justify-content: center; margin-bottom: 8px; }
+  .options label { font-size: 0.85rem; color: var(--muted); }
+  .options select { background: var(--surface); border: 1px solid var(--surface2); border-radius: 6px; padding: 6px 10px; color: var(--text); font-size: 0.85rem; }
+  .options .loc { font-size: 0.8rem; color: var(--dim); font-family: var(--mono); }
+
+  .results { max-width: 700px; margin: 32px auto; padding: 0 20px; }
+  .status { text-align: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
+  .status .num { color: var(--gold); font-weight: 700; }
+
+  .store { background: var(--surface); border: 1px solid var(--surface2); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .store:hover { border-color: var(--accent); }
+  .store-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .store-name { font-size: 1.1rem; font-weight: 700; }
+  .store-dist { font-size: 0.85rem; color: var(--accent); font-weight: 600; }
+  .store-loc { font-size: 0.8rem; color: var(--dim); }
+  .store-tier { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 3px; font-weight: 700; }
+  .tier-professional { background: var(--gold); color: #000; }
+  .tier-standard { background: var(--accent); color: #fff; }
+  .tier-free { background: var(--surface2); color: var(--muted); }
+
+  .item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--surface2); }
+  .item:first-child { border-top: none; }
+  .item-name { font-size: 0.9rem; }
+  .item-detail { display: flex; gap: 16px; align-items: center; }
+  .item-price { font-size: 0.9rem; font-weight: 600; color: var(--green); }
+  .item-stock { font-size: 0.8rem; color: var(--muted); }
+
+  .empty { text-align: center; color: var(--dim); padding: 40px 20px; }
+  .empty h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--muted); }
+
+  .pitch { max-width: 700px; margin: 48px auto; padding: 0 20px; }
+  .pitch h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; text-align: center; }
+  .pitch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .pitch-card { background: var(--surface); border-radius: 8px; padding: 16px; border: 1px solid var(--surface2); }
+  .pitch-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+  .pitch-card p { font-size: 0.8rem; color: var(--muted); }
+
+  .footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--surface2); color: var(--dim); font-size: 0.85rem; margin-top: 48px; }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2rem; }
+    .search-row { flex-direction: column; }
+    .pitch-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Web<span>Serving</span></h1>
+  <p class="tagline">Find what you need — from stores near you</p>
+  <p class="sub">Local businesses serving their inventory to the web. No marketplace fees. No central catalog.</p>
+</div>
+
+<div class="search-box">
+  <div class="search-row">
+    <input type="text" id="query" placeholder="What are you looking for?" autocomplete="off">
+    <button onclick="doSearch()">Search</button>
+  </div>
+  <div class="options">
+    <label>Within
+      <select id="radius">
+        <option value="1">1 mile</option>
+        <option value="3">3 miles</option>
+        <option value="5" selected>5 miles</option>
+        <option value="10">10 miles</option>
+      </select>
+    </label>
+    <span class="loc" id="location-display">Detecting location...</span>
+  </div>
+</div>
+
+<div class="results" id="results"></div>
+
+<div class="pitch">
+  <h2>How it works</h2>
+  <div class="pitch-grid">
+    <div class="pitch-card">
+      <h3>Every store runs WebClerk</h3>
+      <p>Their own system, their own data, their own prices. Sovereign — not rented from a marketplace.</p>
+    </div>
+    <div class="pitch-card">
+      <h3>WebServing routes your search</h3>
+      <p>We query stores near you in real time. No central catalog. No stale data. What you see is what they have.</p>
+    </div>
+    <div class="pitch-card">
+      <h3>No marketplace fees</h3>
+      <p>Stores keep 100% of the sale. WebServing is the router, not the middleman. Amazon takes 30%. We take zero.</p>
+    </div>
+    <div class="pitch-card">
+      <h3>Local delivery via JPods</h3>
+      <p>When JPods runs in your city — same-day delivery, station to station, solar powered. The Physical Internet.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Powered by <a href="https://webclerk.com">WebClerk</a> — open source commerce, locally governed</p>
+  <p style="margin-top:8px">
+    <a href="https://webclerk.com/wc-works/">How WebClerk Works</a> &middot;
+    <a href="https://jpods.com">JPods</a> &middot;
+    <a href="https://dividedsovereignty.com">Divided Sovereignty</a>
+  </p>
+</div>
+
+<script>
+var userLat = null, userLng = null;
+var API_BASE = 'https://webclerk.com/wcapi/webserving';
+
+// Detect location
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    userLat = pos.coords.latitude;
+    userLng = pos.coords.longitude;
+    document.getElementById('location-display').textContent =
+      userLat.toFixed(3) + ', ' + userLng.toFixed(3);
+  }, function() {
+    document.getElementById('location-display').textContent = 'Location unavailable — enter zip';
+  });
+} else {
+  document.getElementById('location-display').textContent = 'Geolocation not supported';
+}
+
+// Search on Enter
+document.getElementById('query').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doSearch();
+});
+
+function doSearch() {
+  var q = document.getElementById('query').value.trim();
+  if (!q) return;
+  if (!userLat) {
+    document.getElementById('results').innerHTML =
+      '<div class="empty"><h3>Location needed</h3><p>Allow location access or enter a zip code to search nearby stores.</p></div>';
+    return;
+  }
+
+  var radius = document.getElementById('radius').value;
+  var url = API_BASE + '/search/?q=' + encodeURIComponent(q) +
+    '&lat=' + userLat + '&lng=' + userLng + '&radius=' + radius;
+
+  document.getElementById('results').innerHTML = '<div class="status">Searching...</div>';
+
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(resp) { renderResults(resp.data || resp); })
+    .catch(function(e) {
+      document.getElementById('results').innerHTML =
+        '<div class="empty"><h3>Search failed</h3><p>' + e.message + '</p></div>';
+    });
+}
+
+function renderResults(data) {
+  var el = document.getElementById('results');
+
+  if (!data.stores || data.stores.length === 0) {
+    el.innerHTML = '<div class="empty"><h3>No local results</h3>' +
+      '<p>No stores within ' + data.radius_miles + ' miles have "' +
+      data.query + '" in stock.</p>' +
+      '<p style="margin-top:12px;font-size:0.8rem;color:var(--dim)">' +
+      data.stores_queried + ' store(s) checked in ' + data.elapsed_ms + 'ms</p></div>';
+    return;
+  }
+
+  var html = '<div class="status">' +
+    '<span class="num">' + data.total_items + '</span> item(s) at ' +
+    '<span class="num">' + data.stores.length + '</span> store(s) within ' +
+    data.radius_miles + ' miles &middot; ' + data.elapsed_ms + 'ms</div>';
+
+  data.stores.forEach(function(store) {
+    var tierClass = 'tier-' + store.tier;
+    html += '<div class="store">' +
+      '<div class="store-header">' +
+        '<div><span class="store-name">' + esc(store.business_name) + '</span>' +
+        ' <span class="store-tier ' + tierClass + '">' + store.tier + '</span>' +
+        '<div class="store-loc">' + esc(store.city) + (store.state ? ', ' + esc(store.state) : '') + '</div></div>' +
+        '<span class="store-dist">' + store.distance_miles + ' mi</span>' +
+      '</div>';
+
+    store.items.forEach(function(item) {
+      html += '<div class="item">' +
+        '<span class="item-name">' + esc(item.name) + '</span>' +
+        '<div class="item-detail">';
+      if (item.price != null) html += '<span class="item-price">$' + Number(item.price).toFixed(2) + '</span>';
+      if (item.on_hand != null) html += '<span class="item-stock">' + item.on_hand + ' in stock</span>';
+      html += '</div></div>';
+    });
+
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
+}
+
+function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+</script>
+
+</body>
+</html>
