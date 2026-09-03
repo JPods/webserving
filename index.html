@@ -106,23 +106,26 @@
 
 <div class="pitch">
   <h2>How it works</h2>
-  <div class="pitch-grid">
-    <div class="pitch-card">
-      <h3>Every store runs WebClerk</h3>
-      <p>Their own system, their own data, their own prices. Sovereign — not rented from a marketplace.</p>
-    </div>
-    <div class="pitch-card">
-      <h3>WebServing routes your search</h3>
-      <p>We query stores near you in real time. No central catalog. No stale data. What you see is what they have.</p>
-    </div>
-    <div class="pitch-card">
-      <h3>No marketplace fees</h3>
-      <p>Stores keep 100% of the sale. WebServing is the router, not the middleman. Amazon takes 30%. We take zero.</p>
-    </div>
-    <div class="pitch-card">
-      <h3>Local delivery via JPods</h3>
-      <p>When JPods runs in your city — same-day delivery, station to station, solar powered. The Physical Internet.</p>
-    </div>
+  <ol style="max-width:600px; margin:0 auto; text-align:left; font-size:0.95rem; color:var(--muted); line-height:2;">
+    <li>Install <a href="https://github.com/JPods/WebClerk" target="_blank" style="color:var(--accent)">WebClerk</a> (free, open source) or another Desktop Hosting application.</li>
+    <li>Get a domain if you don't have one. We recommend <a href="https://cloudflare.com" target="_blank" style="color:var(--accent)">Cloudflare</a> or <a href="https://hostinger.com" target="_blank" style="color:var(--accent)">Hostinger</a>.</li>
+    <li>Buy a Mac Mini or IT15 with 24+ GB of RAM ($1,500 - $1,900).</li>
+    <li>Load your data:
+      <ul style="list-style:disc; margin:4px 0 4px 20px; line-height:1.8;">
+        <li>Link your current inventory system to WebClerk</li>
+        <li>Or export your data and ask WebClerk to upload it</li>
+        <li>WebClerk has integrated AI to assist</li>
+        <li>WebClerk HQ offers parsing support — no cost for 2 months</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div class="pitch" style="margin-top:48px">
+  <h2>Architecture</h2>
+  <p style="text-align:center; font-size:0.85rem; color:var(--dim); margin-bottom:16px;">How WebServing routes searches to sovereign local stores</p>
+  <div style="background:var(--surface); border:1px solid var(--surface2); border-radius:10px; padding:20px; overflow-x:auto;">
+    <img src="flowchart.svg" alt="WebServing Architecture — Local Inventory Routing" style="width:100%; max-width:900px; display:block; margin:0 auto;">
   </div>
 </div>
 
