@@ -38,23 +38,30 @@
   .status { text-align: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 16px; }
   .status .num { color: var(--gold); font-weight: 700; }
 
-  .store { background: var(--surface); border: 1px solid var(--surface2); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+  .store { background: var(--surface); border: 1px solid var(--surface2); border-radius: 10px; padding: 20px; margin-bottom: 16px; overflow: hidden; }
   .store:hover { border-color: var(--accent); }
   .store-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
   .store-name { font-size: 1.1rem; font-weight: 700; }
   .store-dist { font-size: 0.85rem; color: var(--accent); font-weight: 600; }
   .store-loc { font-size: 0.8rem; color: var(--dim); }
+  .store-contact { font-size: 0.8rem; color: var(--dim); margin-top: 2px; }
+  .store-contact a { color: var(--accent); text-decoration: none; }
+  .store-contact a:hover { text-decoration: underline; }
+  .store-name a { color: var(--text); text-decoration: none; }
+  .store-name a:hover { color: var(--accent); }
   .store-tier { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 3px; font-weight: 700; }
   .tier-professional { background: var(--gold); color: #000; }
   .tier-standard { background: var(--accent); color: #fff; }
   .tier-free { background: var(--surface2); color: var(--muted); }
 
-  .item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--surface2); }
-  .item:first-child { border-top: none; }
-  .item-name { font-size: 0.9rem; }
-  .item-detail { display: flex; gap: 16px; align-items: center; }
-  .item-price { font-size: 0.9rem; font-weight: 600; color: var(--green); }
-  .item-stock { font-size: 0.8rem; color: var(--muted); }
+  .db-list { width: 100%; border-collapse: collapse; font-size: 0.85rem; table-layout: fixed; }
+  .db-list th { text-align: left; font-size: 0.75rem; font-weight: 600; color: var(--dim); text-transform: lowercase; padding: 6px 8px; border-bottom: 2px solid var(--surface2); white-space: nowrap; overflow: hidden; }
+  .db-list th.col-right { text-align: right; }
+  .db-list td { padding: 6px 8px; border-top: 1px solid var(--surface2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .db-list tr:first-child td { border-top: none; }
+  .db-list tr:hover td { background: var(--surface2); }
+  .db-list .col-right { text-align: right; }
+  .db-list .col-currency { color: var(--green); font-weight: 600; font-family: var(--mono); }
 
   .empty { text-align: center; color: var(--dim); padding: 40px 20px; }
   .empty h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--muted); }
@@ -81,7 +88,7 @@
 <div class="hero">
   <h1>Web<span>Serving</span></h1>
   <p class="tagline">Find what you need — from stores near you</p>
-  <p class="sub">Local businesses serving their inventory to the web. No marketplace fees. No central catalog.</p>
+  <p class="sub">Search real inventory at local stores. Not a marketplace. Not a catalog. Each store serves its own data from its own server.</p>
 </div>
 
 <div class="search-box">
@@ -100,26 +107,61 @@
     </label>
     <span class="loc" id="location-display">Detecting location...</span>
   </div>
+  <p style="font-size:0.8rem; color:var(--muted); text-align:center; margin-top:8px;">Demo: ask for "baseball." The requesting location is fixed at 5984 S Yale Ave, Tulsa OK — 0.5 miles from our demonstration WebClerk server at 3939 E. 60th Pl.</p> 
+  <p style="font-size:0.8rem; color:var(--muted); text-align:center; margin-top:8px;">In production, your browser provides your actual location and WebClerk and similar Desktop Hosting servers respond.</p>
 </div>
 
 <div class="results" id="results"></div>
 
+<!-- What WebServing Is -->
 <div class="pitch">
-  <h2>How it works</h2>
+  <h2>What is WebServing?</h2>
+  <p style="max-width:600px; margin:0 auto 24px; text-align:left; font-size:0.95rem; color:var(--muted); line-height:1.8;">
+    WebServing is a search engine for local commerce. When you search for a product, WebServing finds stores near you that have it <strong style="color:var(--text)">in stock right now</strong>. The inventory data comes directly from each store's own server — live, not cached, not scraped.
+  </p>
+  <p style="max-width:600px; margin:0 auto 24px; text-align:left; font-size:0.95rem; color:var(--muted); line-height:1.8;">
+    There is no central catalog. No middleman takes a fee. No platform owns the customer relationship. Each store controls what it publishes and serves it from its own hardware.
+  </p>
+  <p style="max-width:600px; margin:0 auto; text-align:left; font-size:0.95rem; color:var(--muted); line-height:1.8;">
+    WebServing is the router — it knows where the stores are and what categories they carry. When you search, it asks nearby stores directly and shows you who has what you need, how far away they are, and how to reach them.
+  </p>
+</div>
+
+<!-- For Shoppers -->
+<div class="pitch" style="margin-top:48px">
+  <h2>For Shoppers</h2>
+  <div class="pitch-grid">
+    <div class="pitch-card">
+      <h3>Search by product</h3>
+      <p>Type what you need — "baseball glove", "gas logs", "furnace filter". WebServing queries stores near you and shows live inventory with prices.</p>
+    </div>
+    <div class="pitch-card">
+      <h3>Search by category</h3>
+      <p>Browse store types — sporting goods, hearth products, hardware. See who's nearby, their hours, phone numbers, and directions.</p>
+    </div>
+    <div class="pitch-card">
+      <h3>Real inventory</h3>
+      <p>What you see is what the store has right now. Not "ships in 2 days from a warehouse 800 miles away." In stock, down the street.</p>
+    </div>
+    <div class="pitch-card">
+      <h3>No account needed</h3>
+      <p>Search is free and public. No login, no tracking, no ads. Just local stores serving their inventory to the web.</p>
+    </div>
+  </div>
+</div>
+
+<!-- For Store Owners -->
+<div class="pitch" style="margin-top:48px">
+  <h2>For Store Owners</h2>
   <ol style="max-width:600px; margin:0 auto; text-align:left; font-size:0.95rem; color:var(--muted); line-height:2;">
-    <li>Install <a href="https://github.com/JPods/WebClerk" target="_blank" style="color:var(--accent)">WebClerk</a> (free, open source) or another Desktop Hosting application.</li>
-    <li>Get a domain if you don't have one. We recommend <a href="https://cloudflare.com" target="_blank" style="color:var(--accent)">Cloudflare</a> or <a href="https://hostinger.com" target="_blank" style="color:var(--accent)">Hostinger</a>.</li>
-    <li>Buy a Mac Mini or IT15 with 24+ GB of RAM ($1,500 - $1,900).</li>
-    <li>Load your data:
-      <ul style="list-style:disc; margin:4px 0 4px 20px; line-height:1.8;">
-        <li>Link your current inventory system to WebClerk</li>
-        <li>Or export your data and ask WebClerk to upload it</li>
-        <li>WebClerk has integrated AI to assist</li>
-        <li>WebClerk HQ offers parsing support — no cost for 2 months</li>
-      </ul>
-    </li>
-    <li>You are now Web Serving your own data from your own server. No middleman. No giving your customer relationships to Amazon. 
+    <li>Install <a href="https://github.com/JPods/WebClerk" target="_blank" style="color:var(--accent)">WebClerk</a> (free, open source) on a Mac Mini or IT15 ($1,500 – $1,900).</li>
+    <li>Get a domain — we recommend <a href="https://cloudflare.com" target="_blank" style="color:var(--accent)">Cloudflare</a> or <a href="https://hostinger.com" target="_blank" style="color:var(--accent)">Hostinger</a> (~$10/year).</li>
+    <li>Load your inventory — link your existing system, or export and upload. WebClerk has AI to assist, and HQ offers parsing support free for 2 months.</li>
+    <li>Register with WebServing — your store appears in local search results. Customers find your products, see your prices, and come to your store.</li>
   </ol>
+  <p style="max-width:600px; margin:16px auto 0; text-align:left; font-size:0.95rem; color:var(--muted); line-height:1.8;">
+    Your data stays on your server. Your customer relationships stay yours. No marketplace fees, no revenue share, no algorithm deciding who sees your products.
+  </p>
 </div>
 
 <div class="pitch" style="margin-top:32px">
@@ -128,9 +170,10 @@
   </div>
 </div>
 
+<!-- Architecture -->
 <div class="pitch" style="margin-top:48px">
   <h2>Architecture</h2>
-  <p style="text-align:center; font-size:0.85rem; color:var(--dim); margin-bottom:16px;">What WebServing does on the backend to empower everyone, routing searches from local needs to local stores</p>
+  <p style="text-align:center; font-size:0.85rem; color:var(--dim); margin-bottom:16px;">WebServing routes searches from customers to stores. Each store serves its own data. No central catalog. No middleman.</p>
   <div style="background:var(--surface); border:1px solid var(--surface2); border-radius:10px; padding:20px; overflow-x:auto;">
     <img src="flowchart.svg" alt="WebServing Architecture — Local Inventory Routing" style="width:100%; max-width:900px; display:block; margin:0 auto;">
   </div>
@@ -146,21 +189,20 @@
 </div>
 
 <script>
-var userLat = null, userLng = null;
+var userLat = 36.075833, userLng = -95.922680;
 var API_BASE = 'https://webclerk.com/wcapi/webserving';
 
-// Detect location
+// Default location: 5984 S Yale Ave, Tulsa OK 74135
+document.getElementById('location-display').textContent = 'Tulsa, OK';
+
+// Try browser geolocation — override default if available
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function(pos) {
     userLat = pos.coords.latitude;
     userLng = pos.coords.longitude;
     document.getElementById('location-display').textContent =
       userLat.toFixed(3) + ', ' + userLng.toFixed(3);
-  }, function() {
-    document.getElementById('location-display').textContent = 'Location unavailable — enter zip';
   });
-} else {
-  document.getElementById('location-display').textContent = 'Geolocation not supported';
 }
 
 // Search on Enter
@@ -194,6 +236,7 @@ function doSearch() {
 
 function renderResults(data) {
   var el = document.getElementById('results');
+  var columns = data.columns || [];
 
   if (!data.stores || data.stores.length === 0) {
     el.innerHTML = '<div class="empty"><h3>No local results</h3>' +
@@ -211,24 +254,49 @@ function renderResults(data) {
 
   data.stores.forEach(function(store) {
     var tierClass = 'tier-' + store.tier;
+    var mapUrl = 'https://maps.google.com/?q=' + store.latitude + ',' + store.longitude;
     html += '<div class="store">' +
       '<div class="store-header">' +
-        '<div><span class="store-name">' + esc(store.business_name) + '</span>' +
+        '<div><span class="store-name"><a href="' + mapUrl + '" target="_blank">' + esc(store.business_name) + '</a></span>' +
         ' <span class="store-tier ' + tierClass + '">' + store.tier + '</span>' +
-        '<div class="store-loc">' + esc(store.city) + (store.state ? ', ' + esc(store.state) : '') + '</div></div>' +
-        '<span class="store-dist">' + store.distance_miles + ' mi</span>' +
-      '</div>';
+        '<div class="store-loc">' + esc(store.city) + (store.state ? ', ' + esc(store.state) : '') + '</div>';
+    var contact = [];
+    if (store.domain) contact.push('<a href="' + (store.domain.indexOf('://') > -1 ? '' : 'https://') + esc(store.domain) + '" target="_blank">' + esc(store.domain) + '</a>');
+    if (store.phones && store.phones.length) {
+      store.phones.forEach(function(p) {
+        var label = p.dept ? esc(p.dept) + ': ' : '';
+        contact.push(label + '<a href="tel:' + esc(p.number) + '">' + esc(p.number) + '</a>');
+      });
+    }
+    if (contact.length) html += '<div class="store-contact">' + contact.join(' &middot; ') + '</div>';
+    html += '</div><span class="store-dist">' + store.distance_miles + ' mi</span></div>';
+
+    html += '<table class="db-list"><thead><tr>';
+    columns.forEach(function(col) {
+      var cls = col.align === 'right' ? ' class="col-right"' : '';
+      var w = col.width ? ' style="width:' + col.width + 'px"' : '';
+      html += '<th' + cls + w + '>' + esc(col.label) + '</th>';
+    });
+    html += '</tr></thead><tbody>';
 
     store.items.forEach(function(item) {
-      html += '<div class="item">' +
-        '<span class="item-name">' + esc(item.name) + '</span>' +
-        '<div class="item-detail">';
-      if (item.price != null) html += '<span class="item-price">$' + Number(item.price).toFixed(2) + '</span>';
-      if (item.on_hand != null) html += '<span class="item-stock">' + item.on_hand + ' in stock</span>';
-      html += '</div></div>';
+      html += '<tr>';
+      columns.forEach(function(col) {
+        var val = item[col.field];
+        var cls = [];
+        if (col.align === 'right') cls.push('col-right');
+        if (col.format === 'currency') cls.push('col-currency');
+        var display = '';
+        if (val != null) {
+          if (col.format === 'currency') display = '$' + Number(val).toFixed(2);
+          else display = esc(String(val));
+        }
+        html += '<td' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' + display + '</td>';
+      });
+      html += '</tr>';
     });
 
-    html += '</div>';
+    html += '</tbody></table></div>';
   });
 
   el.innerHTML = html;
