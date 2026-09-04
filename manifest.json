@@ -1,0 +1,177 @@
+{
+  "_comment": "Site registry — all static sites in the ecosystem. Source: ~/Allie/sites/<name>/. Deploy target on Andi. Domain mapping.",
+
+  "webserving": {
+    "domain": "webserving.com",
+    "also": "webclerk.com/webserving/",
+    "deploy": "landing/webserving/",
+    "repo": "JPods/webserving",
+    "description": "Local inventory search engine — routes searches to nearby WebClerk stores"
+  },
+  "profitbubbles": {
+    "domain": null,
+    "also": "webclerk.com/profitbubbles/",
+    "deploy": "landing/profitbubbles/",
+    "description": "Multi-instance WebClerk model — profit bubbles architecture"
+  },
+  "desktophosting": {
+    "domain": null,
+    "also": "webclerk.com/desktophosting/",
+    "deploy": "landing/desktophosting/",
+    "description": "Desktop Hosting concept — Bill's 2002 Wiley book, origin of WebClerk"
+  },
+  "ecosystem": {
+    "domain": null,
+    "also": "webclerk.com/ecosystem/",
+    "deploy": "webclerk-static/ecosystem/",
+    "description": "JPods/WebClerk ecosystem overview"
+  },
+  "wc-works": {
+    "domain": null,
+    "also": "webclerk.com/wc-works/",
+    "deploy": "webclerk-static/wc-works/",
+    "description": "How WebClerk Works — product walkthrough"
+  },
+  "codemap": {
+    "domain": "codemap.guru",
+    "deploy": "webclerk-static/codemap/",
+    "repo": "JPods/codemap",
+    "description": "Live architecture tool — .dot nodes link to code"
+  },
+  "personalizetransit": {
+    "domain": "personalizetransit.com",
+    "description": "5-tab AI city transit tool — 58 cities"
+  },
+  "jpods3d": {
+    "domain": "jpods3d.com",
+    "description": "SketchUp plugin landing page — video lightbox"
+  },
+  "pjpv": {
+    "domain": "pjpv.io",
+    "description": "PJPV pattern documentation — Pydantic JSON Path Value"
+  },
+  "primelawofnetworks": {
+    "domain": "primelawofnetworks.com",
+    "description": "V proportional to n squared over p — network economics"
+  },
+  "physicalinternet": {
+    "domain": "physicalinternet.com",
+    "description": "Physical Internet concept — solar guideways, patents, energy"
+  },
+  "cityroadkills": {
+    "domain": "cityroadkills.com",
+    "deploy": "sites/cityroadkills/",
+    "nginx": "cityroadkills (port 5060)",
+    "description": "Folder-per-city pedestrian safety data — Stop Child Murder"
+  },
+  "empoweringeveryone": {
+    "domain": "empoweringeveryone.com",
+    "description": "WebServing vision — local commerce empowerment"
+  },
+  "liferequiresenergy": {
+    "domain": null,
+    "also": "webclerk.com/liferequiresenergy/",
+    "deploy": "webclerk-static/liferequiresenergy/",
+    "description": "Energy argument — life requires energy, JPods solar thesis"
+  },
+  "statement_sorter": {
+    "domain": null,
+    "also": "webclerk.com/sort/",
+    "deploy": "webclerk-static/sort/",
+    "description": "Free statement sorting tool — lead gen for WebClerk"
+  },
+  "project_planner": {
+    "domain": null,
+    "also": "webclerk.com/project_planner/",
+    "deploy": "webclerk-static/project_planner/",
+    "description": "Project planning tool"
+  },
+  "qa": {
+    "domain": null,
+    "also": "webclerk.com/qa/",
+    "deploy": "webclerk-static/qa/",
+    "description": "Q&A knowledge base tool"
+  },
+  "heresyouranswer": {
+    "domain": null,
+    "also": "webclerk.com/heresyouranswer/",
+    "deploy": "webclerk-static/heresyouranswer/",
+    "description": "Customer self-service answer tool"
+  },
+  "spareparts": {
+    "domain": null,
+    "also": "webclerk.com/spareparts/",
+    "deploy": "webclerk-static/spareparts/",
+    "description": "Spare parts lookup tool"
+  },
+  "fileorganization": {
+    "domain": null,
+    "also": "webclerk.com/fileorganization/",
+    "deploy": "webclerk-static/fileorganization/",
+    "description": "File organization guide"
+  },
+  "webclerkpreferences": {
+    "domain": null,
+    "also": "webclerk.com/webclerkpreferences/",
+    "deploy": "webclerk-static/webclerkpreferences/",
+    "description": "WebClerk preferences documentation"
+  },
+  "5x5freemarket": {
+    "domain": null,
+    "description": "5x5 free market standard"
+  },
+  "wrongnetwork": {
+    "domain": "wrongnetwork.com",
+    "description": "Why the current network model is wrong"
+  },
+  "everyinjury": {
+    "domain": "everyinjury.com",
+    "description": "Injury tracking and accountability"
+  },
+  "10xMakers.com": {
+    "domain": "10xmakers.com",
+    "description": "10x maker productivity framework"
+  },
+  "jsondriven": {
+    "domain": "jsondriven.com",
+    "description": "JSON-driven architecture pattern"
+  },
+  "jpods-roi-calculator": {
+    "domain": null,
+    "description": "JPods ROI calculator for cities"
+  },
+  "matrixbuilder": {
+    "domain": null,
+    "description": "Knowledge matrix builder tool"
+  },
+  "walkscore70": {
+    "domain": null,
+    "description": "Walk score analysis — 70+ target for JPods station placement"
+  },
+  "inclusive-institutions": {
+    "domain": null,
+    "description": "Inclusive institutions framework"
+  },
+  "jurieslife": {
+    "domain": null,
+    "description": "Jury system and civic duty"
+  },
+  "capital-pages": {
+    "domain": null,
+    "has_index": false,
+    "description": "Capital pages content (no index.html)"
+  },
+  "smallstings": {
+    "domain": "smallstings.com",
+    "has_index": false,
+    "description": "Small-Stings — customer-assessed fines, JPods pays for retrospections"
+  },
+  "contact_loader": {
+    "domain": null,
+    "description": "Contact data loading tool"
+  },
+  "mesh_mobility alias": {
+    "domain": null,
+    "description": "MeshMobility site alias"
+  }
+}
